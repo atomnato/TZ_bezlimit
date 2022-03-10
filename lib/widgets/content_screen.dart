@@ -29,8 +29,9 @@ class ContentScreen extends StatelessWidget {
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemCount: 8,
-              itemBuilder: (BuildContext context, int index) =>
-                  const ContentBox(),
+              itemBuilder: (BuildContext context, int index) => ContentBox(
+                index: index,
+              ),
             ),
           ),
         ],
