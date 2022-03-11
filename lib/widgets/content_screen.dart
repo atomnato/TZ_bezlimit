@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:tz_bezlimit/models/content_controller.dart';
 import 'package:tz_bezlimit/widgets/content_box.dart';
 
 ///Screen containing main screen content.
 class ContentScreen extends StatelessWidget {
   final Size size;
+  final contentController = Get.find<ContentController>();
 
-  const ContentScreen({Key? key, required this.size}) : super(key: key);
+  ContentScreen({Key? key, required this.size}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class ContentScreen extends StatelessWidget {
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemCount: 8,
+              itemCount: contentController.perContent,
               itemBuilder: (BuildContext context, int index) => ContentBox(
                 index: index,
               ),

@@ -1,14 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tz_bezlimit/models/content_controller.dart';
 
 ///Screen with selected item for save.
 class SaveScreen extends StatefulWidget {
-  const SaveScreen({Key? key}) : super(key: key);
+  final int currentIndex;
+
+  const SaveScreen({
+    Key? key,
+    required this.currentIndex,
+  }) : super(key: key);
 
   @override
   State<SaveScreen> createState() => _SaveScreenState();
 }
 
 class _SaveScreenState extends State<SaveScreen> {
+  final contentController = Get.find<ContentController>();
+  late TextEditingController textEditController;
+
+  @override
+  void initState() {
+    textEditController =
+        TextEditingController(text: widget.currentIndex.toString());
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    contentController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,11 +41,12 @@ class _SaveScreenState extends State<SaveScreen> {
           child: Column(
             children: [
               const Spacer(),
-              const Expanded(
+              Expanded(
                 child: TextField(
+                  controller: textEditController,
                   keyboardType: TextInputType.number,
                   autofocus: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Введите номер элемента',
                   ),
@@ -32,7 +56,10 @@ class _SaveScreenState extends State<SaveScreen> {
                 width: double.infinity,
                 height: 48.0,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    contentController.saveContent(textEditController.text);
+                    Get.back();
+                  },
                   child: const Text("Сохранить"),
                 ),
               ),
